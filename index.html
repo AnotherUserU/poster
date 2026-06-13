@@ -6,7 +6,7 @@
   <title>Customer Churn Prediction Poster</title>
   <style>
     @page {
-      size: A3 portrait;
+      size: A2 portrait;
       margin: 0;
     }
 
@@ -26,6 +26,7 @@
       --type-h2: 26px;
       --type-meta: 26px;
       --type-h1: 61px;
+      --poster-scale: 1.41421356;
     }
 
     * {
@@ -89,18 +90,30 @@
     }
 
     .poster {
+      width: 420mm;
+      height: 594mm;
+      position: relative;
+      overflow: hidden;
+      background: #ecf9ff;
+      box-shadow: 0 28px 80px rgba(6, 35, 84, 0.3);
+    }
+
+    .poster-scale {
       width: 297mm;
       height: 420mm;
-      position: relative;
+      position: absolute;
+      left: 0;
+      top: 0;
       overflow: hidden;
       background:
         radial-gradient(circle at 78% 5%, rgba(255, 255, 255, 0.6), transparent 22%),
         linear-gradient(135deg, #d9f0ff 0%, #a6e8f6 28%, #56d2e7 58%, #ecf9ff 100%);
-      box-shadow: 0 28px 80px rgba(6, 35, 84, 0.3);
+      transform: scale(var(--poster-scale));
+      transform-origin: top left;
     }
 
-    .poster::before,
-    .poster::after {
+    .poster-scale::before,
+    .poster-scale::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -108,7 +121,7 @@
       z-index: 0;
     }
 
-    .poster::before {
+    .poster-scale::before {
       background-image: radial-gradient(circle, rgba(0, 77, 182, 0.23) 0 3px, transparent 3.5px);
       background-size: 20px 20px;
       width: 130px;
@@ -118,7 +131,7 @@
       opacity: 0.75;
     }
 
-    .poster::after {
+    .poster-scale::after {
       background: linear-gradient(180deg, transparent 0 94%, #01489e 94% 100%);
     }
 
@@ -297,15 +310,15 @@
     .method-flow {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-template-rows: 92px 92px;
+      grid-template-rows: 104px 104px;
       grid-template-areas:
         "review feature split train"
         "eval smote threshold optimize";
       column-gap: 18px;
-      row-gap: 18px;
+      row-gap: 22px;
       position: relative;
-      padding: 2px 16px 0;
-      min-height: 204px;
+      padding: 6px 16px 4px;
+      min-height: 238px;
     }
 
     .method-flow::before {
@@ -430,31 +443,59 @@
       display: none;
     }
 
+    .decorative-ml {
+      min-height: 214px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0;
+      background:
+        radial-gradient(circle at 18% 44%, rgba(255, 255, 255, 0.12), transparent 34%),
+        radial-gradient(circle at 72% 36%, rgba(14, 96, 207, 0.1), transparent 38%);
+    }
+
+    .decorative-ml::before {
+      content: "";
+      position: absolute;
+      left: 48px;
+      top: 30px;
+      width: 128px;
+      height: 128px;
+      background-image: radial-gradient(circle, rgba(10, 90, 200, 0.24) 0 3px, transparent 3.4px);
+      background-size: 18px 18px;
+      opacity: 0.38;
+    }
+
+    .decorative-ml svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .decor-line {
+      stroke: rgba(7, 83, 190, 0.17);
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .decor-node {
+      fill: rgba(255, 255, 255, 0.22);
+      stroke: rgba(7, 83, 190, 0.18);
+      stroke-width: 2.6;
+    }
+
+    .decor-node.strong {
+      fill: rgba(12, 98, 211, 0.16);
+    }
+
     .flow-step.down::after {
       display: none;
     }
 
     .flow-step.down::before {
       display: none;
-    }
-
-    .features ul {
-      margin: 4px 0 0 16px;
-      padding: 0;
-    }
-
-    .features li {
-      margin: 8px 0;
-      padding-left: 4px;
-      color: var(--navy);
-      font-size: 16px;
-      line-height: 1.16;
-      font-weight: 500;
-    }
-
-    .features li::marker {
-      color: var(--blue);
-      font-size: 18px;
     }
 
     .baseline {
@@ -817,6 +858,11 @@
       font-size: 16px;
     }
 
+    .conclusion p {
+      font-size: 15.4px;
+      line-height: 1.18;
+    }
+
     @media screen and (max-width: 1180px) {
       body {
         align-items: start;
@@ -837,12 +883,13 @@
 </head>
 <body>
   <div class="download-toolbar" aria-label="Poster export controls">
-    <a class="download-button" id="downloadPoster" href="customer-churn-random-forest-a3-300dpi.png" download="customer-churn-random-forest-a3-300dpi.png">
+    <a class="download-button" id="downloadPoster" href="customer-churn-random-forest-a2-300dpi.png" download="customer-churn-random-forest-a2-300dpi.png">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
       Download Poster PNG
     </a>
   </div>
   <main class="poster" aria-label="Customer Churn Prediction Using Random Forest poster">
+    <div class="poster-scale">
     <section class="content">
       <header class="hero">
         <h1 class="title">Customer Churn Prediction<br />Using Random Forest</h1>
@@ -955,7 +1002,7 @@
               <span class="badge">
                 <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="3" /><path d="M16 3v5M16 24v5M3 16h5M24 16h5M6.8 6.8l3.5 3.5M21.7 21.7l3.5 3.5M25.2 6.8l-3.5 3.5M10.3 21.7l-3.5 3.5" /></svg>
               </span>
-              <h2>3) Method</h2>
+              <h2>3) End-to-End ML Steps</h2>
             </div>
             <div class="method-flow">
               <div class="flow-step flow-review">
@@ -1001,20 +1048,21 @@
             </div>
           </article>
 
-          <article class="card features">
-            <div class="card-heading">
-              <span class="badge">
-                <svg viewBox="0 0 32 32"><path d="M6 7h9M6 16h9M6 25h9M22 7h4M22 16h4M22 25h4" /><path d="M15 7c4 0 3 9 7 9M15 25c4 0 3-9 7-9" /><circle cx="6" cy="7" r="2" fill="white" stroke="none" /><circle cx="6" cy="16" r="2" fill="white" stroke="none" /><circle cx="6" cy="25" r="2" fill="white" stroke="none" /><circle cx="26" cy="16" r="2" fill="white" stroke="none" /></svg>
-              </span>
-              <h2>4) Feature Engineering</h2>
-            </div>
-            <ul>
-              <li>No null values were found in the dataset.</li>
-              <li>"Total Charges" was converted from object to integer and NaN values were filled with 0.</li>
-              <li>One-hot encoding was used for non-ordered categorical features.</li>
-              <li>Ordinal encoding was used for "Contract" and the binary label "Churn".</li>
-            </ul>
-          </article>
+          <div class="decorative-ml" aria-hidden="true">
+            <svg viewBox="0 0 520 214">
+              <path class="decor-line" d="M78 122h82l42-42h86M166 122l42 42h118M288 80h90l50-50h58M326 164h92l46 34h42" />
+              <path class="decor-line" d="M92 48v74M206 38v42M288 80v84M428 30v94M464 198v-74" />
+              <circle class="decor-node strong" cx="78" cy="122" r="18" />
+              <circle class="decor-node" cx="206" cy="80" r="16" />
+              <circle class="decor-node strong" cx="288" cy="80" r="18" />
+              <circle class="decor-node" cx="326" cy="164" r="16" />
+              <circle class="decor-node strong" cx="428" cy="30" r="18" />
+              <circle class="decor-node" cx="464" cy="198" r="16" />
+              <circle class="decor-node" cx="92" cy="48" r="13" />
+              <circle class="decor-node" cx="506" cy="198" r="13" />
+            </svg>
+          </div>
+
         </div>
 
         <div class="column">
@@ -1023,7 +1071,7 @@
               <span class="badge">
                 <svg viewBox="0 0 32 32"><path d="M5 24h22M7 22l6-7 5 4 8-12M23 7h3v3" /></svg>
               </span>
-              <h2>5) Model Results</h2>
+              <h2>4) Model Results</h2>
             </div>
 
             <section class="baseline">
@@ -1094,7 +1142,7 @@
               <span class="badge">
                 <svg viewBox="0 0 32 32"><path d="M7 26V15M16 26V6M25 26V11M5 26h22" /></svg>
               </span>
-              <h2>6) Key Findings</h2>
+              <h2>5) Key Findings</h2>
             </div>
             <div class="finding-chart">
               <div class="rank-list">
@@ -1125,9 +1173,9 @@
               <span class="badge">
                 <svg viewBox="0 0 32 32"><path d="M8 4v24M8 7c5-3 10 3 16 0v12c-6 3-11-3-16 0" /></svg>
               </span>
-              <h2>7) Conclusion</h2>
+              <h2>6) Conclusion</h2>
             </div>
-            <p>The baseline Random Forest reached 80% accuracy, but churn recall was only 50%. After SMOTE, threshold tuning, max_depth adjustment, and 500 estimators, churn recall improved to 78% with a 5% train-test gap.</p>
+            <p>Feature engineering prepared the data by converting "Total Charges" to integer, filling NaN values with 0, applying one-hot encoding, and using ordinal encoding for "Contract" and "Churn". The baseline Random Forest reached 80% accuracy, but churn recall was only 50%, so recall improvement became the main focus. SMOTE raised churn recall to 58%, while threshold &gt; 0.35 improved recall to 78% and max_depth 15 with 500 estimators reduced the train-test gap to 5%.</p>
           </article>
         </div>
       </section>
@@ -1141,6 +1189,7 @@
       <span class="footer-divider"></span>
       <span class="footer-text">Bina Nusantara University</span>
     </footer>
+    </div>
   </main>
 </body>
 </html>
