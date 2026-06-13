@@ -21,6 +21,11 @@
       --green: #13723b;
       --orange: #f28a23;
       --shadow: 0 18px 48px rgba(8, 72, 148, 0.14);
+      --type-sm: 13px;
+      --type-body: 16px;
+      --type-h2: 26px;
+      --type-meta: 26px;
+      --type-h1: 61px;
     }
 
     * {
@@ -63,7 +68,7 @@
       padding: 0 14px;
       background: var(--blue);
       color: white;
-      font: 800 13px/1 Arial, Helvetica, sans-serif;
+      font: 800 var(--type-sm)/1 Arial, Helvetica, sans-serif;
       text-decoration: none;
       cursor: pointer;
     }
@@ -125,7 +130,7 @@
 
     .hero {
       position: relative;
-      min-height: 270px;
+      min-height: 248px;
       padding: 0 120px 0 16px;
     }
 
@@ -133,26 +138,18 @@
       margin: 0;
       color: var(--navy);
       max-width: 890px;
-      font-size: 54px;
-      line-height: 1.02;
+      font-size: var(--type-h1);
+      line-height: 0.99;
       font-weight: 900;
       letter-spacing: 0;
-    }
-
-    .subtitle {
-      margin: 10px 0 16px;
-      color: var(--blue);
-      font-size: 39px;
-      line-height: 1.05;
-      font-weight: 800;
     }
 
     .meta-line {
       display: flex;
       align-items: center;
       gap: 16px;
-      margin: 14px 0;
-      font-size: 21px;
+      margin: 18px 0 0;
+      font-size: var(--type-meta);
       font-weight: 800;
     }
 
@@ -165,7 +162,8 @@
     }
 
     .authors {
-      font-size: 17px;
+      margin-top: 16px;
+      font-size: 18px;
       line-height: 1.35;
       font-weight: 700;
     }
@@ -230,7 +228,7 @@
 
     h2 {
       margin: 0;
-      font-size: 25px;
+      font-size: var(--type-h2);
       line-height: 1.1;
       font-weight: 900;
       letter-spacing: 0;
@@ -238,7 +236,7 @@
 
     p {
       margin: 0;
-      font-size: 16px;
+      font-size: var(--type-body);
       line-height: 1.25;
       font-weight: 500;
     }
@@ -591,15 +589,14 @@
 
     .gauge-caption {
       margin-top: 4px;
-      font-size: 15px;
-      line-height: 1.08;
-      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.05;
+      font-weight: 900;
     }
 
     .gauge-caption strong {
-      display: block;
-      font-size: 17px;
-      font-weight: 900;
+      font-size: inherit;
+      font-weight: inherit;
     }
 
     .findings {
@@ -718,49 +715,55 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 76px;
-      background: linear-gradient(90deg, #00469e, #0064be 42%, #00489f 100%);
+      height: 82px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 30%),
+        radial-gradient(circle at 50% 0, rgba(89, 192, 255, 0.36), transparent 38%),
+        linear-gradient(90deg, #003f8c 0%, #0066c5 50%, #003f8c 100%);
       color: white;
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: auto auto auto;
+      justify-content: center;
       align-items: center;
       gap: 22px;
       padding: 0 38px;
       overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.26);
     }
 
     .footer::before {
       content: "";
       position: absolute;
-      left: 14px;
-      bottom: 14px;
-      width: 120px;
-      height: 45px;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0 2.7px, transparent 3px);
+      left: 16px;
+      bottom: 15px;
+      width: 142px;
+      height: 48px;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0 2.4px, transparent 2.8px);
       background-size: 15px 15px;
-      opacity: 0.75;
+      opacity: 0.48;
     }
 
     .footer::after {
       content: "";
       position: absolute;
-      right: -10px;
-      bottom: -4px;
-      width: 248px;
-      height: 80px;
+      right: 0;
+      bottom: 0;
+      width: 292px;
+      height: 82px;
       background-image:
-        linear-gradient(135deg, transparent 0 42%, rgba(104, 183, 255, 0.35) 42% 45%, transparent 45%),
-        linear-gradient(0deg, transparent 0 35%, rgba(104, 183, 255, 0.35) 35% 38%, transparent 38%),
-        radial-gradient(circle, rgba(255, 255, 255, 0.75) 0 3px, transparent 3.3px);
-      background-size: 220px 76px, 220px 76px, 56px 26px;
+        linear-gradient(135deg, transparent 0 43%, rgba(113, 196, 255, 0.38) 43% 46%, transparent 46%),
+        linear-gradient(0deg, transparent 0 36%, rgba(113, 196, 255, 0.34) 36% 39%, transparent 39%),
+        radial-gradient(circle, rgba(255, 255, 255, 0.78) 0 2.8px, transparent 3.1px);
+      background-size: 245px 82px, 245px 82px, 56px 27px;
+      opacity: 0.9;
     }
 
     .footer-mark {
-      justify-self: end;
       width: 42px;
       height: 42px;
       position: relative;
       z-index: 1;
+      filter: drop-shadow(0 3px 8px rgba(0, 24, 82, 0.28));
     }
 
     .footer-divider {
@@ -768,15 +771,17 @@
       z-index: 1;
       width: 1px;
       height: 42px;
-      background: rgba(255, 255, 255, 0.76);
+      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.72), transparent);
     }
 
     .footer-text {
       position: relative;
       z-index: 1;
-      font-size: 22px;
-      font-weight: 700;
-      justify-self: start;
+      font-size: 26px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-shadow: 0 2px 10px rgba(0, 30, 90, 0.28);
     }
 
     .circuit-line {
@@ -841,14 +846,13 @@
     <section class="content">
       <header class="hero">
         <h1 class="title">Customer Churn Prediction<br />Using Random Forest</h1>
-        <p class="subtitle">Machine Learning Case Study</p>
         <div class="meta-line">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <path d="M32 10 4 22l28 12 28-12L32 10Z" />
             <path d="M14 28v12c8 8 28 8 36 0V28" fill="none" stroke-width="4" />
             <path d="M53 25v18" fill="none" stroke-width="4" />
           </svg>
-          <span>MATH6187016 - Machine Learning</span>
+          <span>LA05 - LEC - Machine Learning</span>
         </div>
         <div class="meta-line authors">
           <svg viewBox="0 0 64 64" aria-hidden="true">
@@ -1005,8 +1009,8 @@
               <h2>4) Feature Engineering</h2>
             </div>
             <ul>
-              <li>No major null-value issue was found.</li>
-              <li>"Total Charges" was converted from object to numeric and missing values were filled with 0.</li>
+              <li>No null values were found in the dataset.</li>
+              <li>"Total Charges" was converted from object to integer and NaN values were filled with 0.</li>
               <li>One-hot encoding was used for non-ordered categorical features.</li>
               <li>Ordinal encoding was used for "Contract" and the binary label "Churn".</li>
             </ul>
@@ -1079,10 +1083,10 @@
                   <line x1="75" y1="75" x2="111" y2="36" stroke="#08134f" stroke-width="8" stroke-linecap="round" />
                   <circle cx="75" cy="75" r="8" fill="#08134f" />
                 </svg>
-                <p class="gauge-caption"><strong>Better recall</strong>with stable<br />performance.</p>
+                <p class="gauge-caption">Higher recall<br />with a 5%<br />train-test gap.</p>
               </div>
             </section>
-            <p>SMOTE raised churn recall to 58%; threshold tuning and optimization improved it to 78% with a 5% gap.</p>
+            <p>SMOTE raised churn recall to 58%. Threshold &gt; 0.35 raised recall to 78%, while max_depth 15 and 500 estimators reduced the train-test gap to 5%.</p>
           </article>
 
           <article class="card findings">
@@ -1112,7 +1116,7 @@
               <span class="badge">
                 <svg viewBox="0 0 32 32"><path d="M6 24h20" /><path d="M9 21V9M15 21V5M21 21v-7" /><path d="M8 8h6M8 12h5M19 6h4M19 10h5" /><path d="M24 14a5 5 0 1 1-3.5 1.5" /><path d="M24 17v3l2 1" /></svg>
               </span>
-              <p>High charges and short tenure are strong churn signals.</p>
+              <p>Total Charges, Tenure, Monthly Charges, and Contract are the top four features in the model.</p>
             </div>
           </article>
 
@@ -1123,7 +1127,7 @@
               </span>
               <h2>7) Conclusion</h2>
             </div>
-            <p>Random Forest can be used effectively for customer churn prediction. Feature engineering, SMOTE, threshold tuning, and model optimization improved the model's ability to detect churn. The final model also provides useful business insight for customer retention decisions.</p>
+            <p>The baseline Random Forest reached 80% accuracy, but churn recall was only 50%. After SMOTE, threshold tuning, max_depth adjustment, and 500 estimators, churn recall improved to 78% with a 5% train-test gap.</p>
           </article>
         </div>
       </section>
