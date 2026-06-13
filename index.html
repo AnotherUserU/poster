@@ -64,6 +64,7 @@
       background: var(--blue);
       color: white;
       font: 800 13px/1 Arial, Helvetica, sans-serif;
+      text-decoration: none;
       cursor: pointer;
     }
 
@@ -80,12 +81,6 @@
     .download-button:disabled {
       cursor: wait;
       opacity: 0.72;
-    }
-
-    .download-button.secondary {
-      border: 1px solid rgba(8, 79, 192, 0.24);
-      background: #ffffff;
-      color: var(--blue);
     }
 
     .poster {
@@ -837,14 +832,10 @@
 </head>
 <body>
   <div class="download-toolbar" aria-label="Poster export controls">
-    <button class="download-button" type="button" id="downloadPoster">
+    <a class="download-button" id="downloadPoster" href="customer-churn-random-forest-a3-300dpi.png" download="customer-churn-random-forest-a3-300dpi.png">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
       Download Poster PNG
-    </button>
-    <button class="download-button secondary" type="button" id="downloadPosterSvg">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M8 13h8" /><path d="M8 17h5" /></svg>
-      Download SVG
-    </button>
+    </a>
   </div>
   <main class="poster" aria-label="Customer Churn Prediction Using Random Forest poster">
     <section class="content">
@@ -1147,144 +1138,5 @@
       <span class="footer-text">Bina Nusantara University</span>
     </footer>
   </main>
-  <script>
-    const downloadButton = document.getElementById("downloadPoster");
-    const downloadSvgButton = document.getElementById("downloadPosterSvg");
-
-    function createPosterSvg(poster, cssWidth, cssHeight) {
-      const styleText = Array.from(document.querySelectorAll("style"))
-        .map((style) => style.textContent)
-        .join("\n");
-      const clone = poster.cloneNode(true);
-      clone.style.boxShadow = "none";
-
-      const html = `
-        <html xmlns="http://www.w3.org/1999/xhtml">
-          <head>
-            <style>${styleText}</style>
-            <style>
-              html, body {
-                margin: 0;
-                width: ${cssWidth}px;
-                height: ${cssHeight}px;
-                overflow: hidden;
-                background: transparent;
-                display: block;
-              }
-              .download-toolbar { display: none !important; }
-              .poster {
-                width: ${cssWidth}px !important;
-                height: ${cssHeight}px !important;
-                box-shadow: none !important;
-              }
-            </style>
-          </head>
-          <body>${clone.outerHTML}</body>
-        </html>`;
-
-      return `
-        <svg xmlns="http://www.w3.org/2000/svg" width="${cssWidth}" height="${cssHeight}" viewBox="0 0 ${cssWidth} ${cssHeight}">
-          <foreignObject width="100%" height="100%">${html}</foreignObject>
-        </svg>`;
-    }
-
-    function getPosterExport() {
-      const poster = document.querySelector(".poster");
-      const rect = poster.getBoundingClientRect();
-      const cssWidth = Math.round(rect.width);
-      const cssHeight = Math.round(rect.height);
-      const svg = createPosterSvg(poster, cssWidth, cssHeight);
-      return { svg };
-    }
-
-    function downloadBlob(blob, filename) {
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1200);
-    }
-
-    function loadImage(url) {
-      return new Promise((resolve, reject) => {
-        const image = new Image();
-        image.decoding = "async";
-        image.onload = () => resolve(image);
-        image.onerror = () => reject(new Error("Poster SVG could not be rendered as an image."));
-        image.src = url;
-      });
-    }
-
-    function downloadPosterSvg() {
-      const { svg } = getPosterExport();
-      const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
-      downloadBlob(blob, "customer-churn-random-forest-a3-vector.svg");
-    }
-
-    async function downloadPosterPng() {
-      const outputWidth = 3508;
-      const outputHeight = 4961;
-      const { svg } = getPosterExport();
-      const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-
-      try {
-        const image = await loadImage(url);
-
-        const canvas = document.createElement("canvas");
-        canvas.width = outputWidth;
-        canvas.height = outputHeight;
-        const context = canvas.getContext("2d");
-        if (!context) {
-          throw new Error("Canvas is not available in this browser.");
-        }
-        context.fillStyle = "#ffffff";
-        context.fillRect(0, 0, outputWidth, outputHeight);
-        context.drawImage(image, 0, 0, outputWidth, outputHeight);
-
-        const pngBlob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png", 1));
-        if (!pngBlob) {
-          throw new Error("PNG export returned an empty file.");
-        }
-        downloadBlob(pngBlob, "customer-churn-random-forest-a3-300dpi.png");
-      } finally {
-        URL.revokeObjectURL(url);
-      }
-    }
-
-    downloadButton.addEventListener("click", async () => {
-      downloadButton.disabled = true;
-      const originalText = downloadButton.innerHTML;
-      downloadButton.textContent = "Preparing PNG...";
-      try {
-        await downloadPosterPng();
-      } catch (error) {
-        console.error(error);
-        downloadPosterSvg();
-        alert("PNG export was blocked by this browser, so the poster was downloaded as an SVG vector file instead. The SVG is high quality and contains only the poster.");
-      } finally {
-        downloadButton.disabled = false;
-        downloadButton.innerHTML = originalText;
-      }
-    });
-
-    downloadSvgButton.addEventListener("click", () => {
-      const originalText = downloadSvgButton.innerHTML;
-      downloadSvgButton.disabled = true;
-      downloadSvgButton.textContent = "Preparing SVG...";
-      try {
-        downloadPosterSvg();
-      } catch (error) {
-        console.error(error);
-        alert("SVG download failed. Reload this file and try again.");
-      } finally {
-        downloadSvgButton.disabled = false;
-        downloadSvgButton.innerHTML = originalText;
-      }
-    });
-  </script>
 </body>
 </html>
