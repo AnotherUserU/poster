@@ -448,12 +448,16 @@
       padding: 0;
     }
 
+    .features {
+      padding-bottom: 14px;
+    }
+
     .features li {
-      margin: 8px 0;
+      margin: 6px 0;
       padding-left: 4px;
       color: var(--navy);
-      font-size: 16px;
-      line-height: 1.16;
+      font-size: 15.6px;
+      line-height: 1.12;
       font-weight: 500;
     }
 
@@ -919,7 +923,7 @@
               </span>
               <h2>1) Introduction</h2>
             </div>
-            <p>Customer churn is an important issue in the telecom industry because losing customers affects revenue and retention costs. This project aims to identify customers who are likely to churn so companies can respond earlier and take proactive actions to improve retention.</p>
+            <p>This project analyzes customer churn using the Kaggle Telco Customer Churn dataset. A Random Forest model was built to predict the Churn label, then improved through feature engineering, SMOTE, threshold tuning, and parameter adjustments to increase churn recall and reduce the train-test gap.</p>
           </article>
 
           <article class="card dataset">
@@ -966,7 +970,7 @@
                 <td>Churn</td>
               </tr>
             </table>
-            <p>The dataset includes customer profile, service, contract, and billing information.</p>
+            <p>For model training, Churn was used as the label and all columns except customer_id and Churn were used as features.</p>
           </article>
 
           <article class="card method">
@@ -1028,10 +1032,9 @@
               <h2>4) Feature Engineering</h2>
             </div>
             <ul>
-              <li>"Total Charges" was converted from object to integer.</li>
-              <li>NaN values were filled with 0.</li>
-              <li>One-hot encoding was used for non-ordered categorical features.</li>
-              <li>Ordinal encoding was used for "Contract" and "Churn".</li>
+              <li>Convert "Total Charges" from object to integer.</li>
+              <li>Use one-hot encoding for non-ordered categoricals.</li>
+              <li>Use ordinal encoding for "Contract" and "Churn".</li>
             </ul>
           </article>
 
@@ -1147,7 +1150,7 @@
               </span>
               <h2>7) Conclusion</h2>
             </div>
-            <p>The baseline Random Forest reached 80% accuracy, but churn recall was only 50%, so the model still missed many churn customers. SMOTE improved churn recall to 58%, and threshold &gt; 0.35 increased it further to 78%. After reducing max_depth to 15 and increasing n_estimators to 500, the train-test gap decreased to 5%, making the final model more balanced for churn detection.</p>
+            <p>The baseline Random Forest reached 80% accuracy, with 67% churn precision and 50% churn recall. SMOTE increased churn recall to 58%, then threshold &gt; 0.35 increased churn recall to 78%. Reducing max_depth from 20 to 15 lowered the train-test gap from 9% to 6%, and increasing n_estimators from 100 to 500 lowered it to 5%.</p>
           </article>
         </div>
       </section>
